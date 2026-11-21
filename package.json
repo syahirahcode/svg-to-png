@@ -1,25 +1,6 @@
-const { Resvg } = require('@resvg/resvg-js');
-
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Gunakan method POST' });
+{
+  "name": "svg-to-png-netlify",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
   }
-
-  try {
-    const { svg } = req.body;
-    if (!svg) return res.status(400).json({ error: 'Field svg kosong' });
-
-    const resvg = new Resvg(svg, {
-      fitTo: { mode: 'width', value: 4000 },
-      background: 'rgba(0, 0, 0, 0)'
-    });
-
-    const pngData = resvg.render();
-    const pngBuffer = pngData.asPng();
-
-    res.setHeader('Content-Type', 'image/png');
-    return res.status(200).send(pngBuffer);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
+}
